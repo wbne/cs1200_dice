@@ -105,7 +105,7 @@ function graph(category, add) {
 		.attr("text-anchor", "end")
 		.attr("x", 150)
 		.attr("y", -10)
-		.text("Number of Occurances")
+		.text("Number of Occurrences")
 
 	svg.selectAll("mybar")
 		.data(dat)
