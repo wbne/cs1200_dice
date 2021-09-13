@@ -28,7 +28,7 @@ function roll() {
 	graph(category, false)
 	graph(diff, true)
 
-	//sampleVariance function computes the variances
+	//sampleStats function computes the variances
 	sampleStats(category, n, false)
 	sampleStats(diff, n, true)
 
@@ -182,11 +182,7 @@ function constructTable(adding) {
 		}
 		table.appendChild(rowElement)
 	}
-	table.hidden = false
-
-	for (var header of document.getElementsByClassName("header")) { // Show table headers
-		header.hidden = false
-	}
+	document.getElementById("population").style.display = "block"
 }
 
 /*
