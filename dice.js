@@ -29,8 +29,16 @@ function roll() {
 	graph(diff, true)
 
 	//sampleVariance function computes the variances
-	sampleVariance(category, n, false)
-	sampleVariance(diff, n, true)
+	sampleStats(category, n, false)
+	sampleStats(diff, n, true)
+
+	//constructTable function creates the tables for part 4a
+	constructTable(true)
+	constructTable(false)
+
+	//populationStats calculates population stats from the previously constructed tables
+	populationStats(true)
+	populationStats(false)
 }
 
 /*
@@ -119,12 +127,12 @@ function graph(category, add) {
 }
 
 /*
- * Calculates the variance from the mean.
+ * Calculates the variance and the mean.
  * @param array: The array of integer values
  * @param number: The sample size
  * @param add: Whether to add or overwrite the text
  */
-function sampleVariance(array, number, add) {
+function sampleStats(array, number, add) {
 	var decimal = 1000
 	var mean = 0
 	var sum = 0
@@ -133,24 +141,85 @@ function sampleVariance(array, number, add) {
 		sum += array[i] * Math.pow(i, 2)
 	}
 	mean /= number
+
+	var roundedMean = Math.round(mean * decimal) / decimal
+	var meanTextNode = document.getElementById("mean")
+	if(add) {
+		var text = meanTextNode.textContent += " Difference Mean: " + roundedMean
+		meanTextNode.textContent = text
+	} else {
+		document.getElementById("mean").textContent = "Summation Mean: " + roundedMean
+	}
+
 	sum /= number
 	var variance = sum - Math.pow(mean, 2)
 	variance = Math.round(variance * decimal) / decimal
-	var textNode = document.getElementById("variance")
+	var varianceTextNode = document.getElementById("variance")
 	if(add) {
-		var text = textNode.textContent += " Difference Variance: " + variance
-		textNode.textContent = text
-		return
-	}
-	document.getElementById("variance").textContent = "Summation Variance: " + variance	
+		var text = varianceTextNode.textContent += " Difference Variance: " + variance
+		varianceTextNode.textContent = text
+	} else {
+		document.getElementById("variance").textContent = "Summation Variance: " + variance
+	}	
 }
 
 /*
  * Problem 4a. Construct two tables - each with the size 6x6.
  * One table with be sum(i, j) and the other will be diff(i, j)
+ * @param adding: Whether to construct the adding table (true) or the subtracting table (false)
  */
 function constructTable(adding) {
+	var table = document.getElementById(adding ? "adding" : "subtracting")
+	while(table.lastChild) { // Reset table
+        table.removeChild(table.lastChild);
+    }
+	for(row = 1; row <= 6; row++) { // Populate table
+		var rowElement = document.createElement("tr")
+		for(col = 1; col <= 6; col++) {
+			cellElement = document.createElement("td")
+			cellElement.innerHTML = adding ? row + col : Math.abs(row - col)
+			rowElement.appendChild(cellElement)
+		}
+		table.appendChild(rowElement)
+	}
+	table.hidden = false
+
+	for (var header of document.getElementsByClassName("header")) { // Show table headers
+		header.hidden = false
+	}
+}
+
+/*
+ * Calculates and displays the population stats from the generated tables.
+ * @param adding: Whether to calculate using the adding table (true) or the subtracting tabel (false)
+*/
+function populationStats(adding) {
+	var decimal = 1000
+	var table = document.getElementById(adding ? "adding" : "subtracting")
+
+	var counts = Array(13).fill(0)
+	var totalCount = 0
+	table.childNodes.forEach(tr => {
+		tr.childNodes.forEach(td => {
+			counts[td.innerHTML]++
+			totalCount++
+		})
+	})
 	
+	var mean = 0
+	for(i = 0; i <= 12; i++) {
+		mean += i * counts[i] / totalCount
+	}
+	var variance = -mean * mean
+	for(i = 0; i <= 12; i++) {
+		variance += i * i * counts[i] / totalCount
+	}
+
+	mean = Math.round(mean * decimal) / decimal
+	variance = Math.round(variance * decimal) / decimal
+
+	textElement = document.getElementById((adding ? "adding" : "subtracting") + "Population")
+	textElement.innerHTML = (adding ? "Summation" : "Difference") + " Population Mean: " + mean + (adding ? " Summation" : " Difference") + " Population Variance: " + variance
 }
 
 /*

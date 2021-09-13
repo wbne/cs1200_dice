@@ -1,5 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+  <style>
+    table, td {
+      border:1px solid black;
+    }
+    td {
+      width:30px;
+      text-align:center;
+    }
+  </style>
   <head>
     <meta charset="utf-8">
     <title></title>
@@ -12,7 +21,14 @@
 	  <input id="numRolls" placeholder="eg. 100"></input>
 	  <button id="numButton">Submit</button>
 	  <div id="graphArea"></div>
+    <p id="mean">Test</p>
 	  <p id="variance"></p>
+    <h3 class="header" hidden>Summation Table</h3>
+    <table id="adding" hidden></table>
+    <p id="addingPopulation"></p>
+    <h3 class="header" hidden>Difference Table</h3>
+    <table id="subtracting" hidden></table>
+    <p id="subtractingPopulation"></p>
   </body>
   <script type="text/javascript" src="dice.js"></script>
 </html>
