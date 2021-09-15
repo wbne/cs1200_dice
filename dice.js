@@ -15,8 +15,8 @@ function roll() {
 
 	//This rolls the dice N many times
 	for(i = 0; i < n; i++) {
-		var q = Math.round(5 * Math.random())
-		var w = Math.round(5 * Math.random())
+		var q = 1 + Math.floor(6 * Math.random())
+		var w = 1 + Math.floor(6 * Math.random())
 		var diffed = Math.abs(q-w)
 
 		//the values correspond to the index and is noted
