@@ -8,7 +8,7 @@ function roll() {
 	var n = 10 | document.getElementById("numRolls").value
 
 	//array of tabulated dice sums
-	var category = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+	var category = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 	//array of tabulated dice differences
 	var diff = [0, 0, 0, 0, 0, 0]
