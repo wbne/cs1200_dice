@@ -173,10 +173,21 @@ function constructTable(adding) {
 	while(table.lastChild) { // Reset table
         table.removeChild(table.lastChild);
     }
+	var headerRow = document.createElement("tr")
+	headerRow.appendChild(document.createElement("th"))
+	for(i = 1; i <= 6; i++) {
+		cellElement = document.createElement("th")
+		cellElement.innerHTML = i
+		headerRow.appendChild(cellElement)
+	}
+	table.appendChild(headerRow)
 	for(row = 1; row <= 6; row++) { // Populate table
 		var rowElement = document.createElement("tr")
+		var rowHeader = document.createElement("th")
+		rowHeader.innerHTML = row
+		rowElement.appendChild(rowHeader)
 		for(col = 1; col <= 6; col++) {
-			cellElement = document.createElement("td")
+			var cellElement = document.createElement("td")
 			cellElement.innerHTML = adding ? row + col : Math.abs(row - col)
 			rowElement.appendChild(cellElement)
 		}
