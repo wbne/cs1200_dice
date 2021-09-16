@@ -1,6 +1,6 @@
 /*
- * CS 1200 HW 1: GROUP A
- * Names: Benjamin Wang, Jack Myrick, and Luck Jaggernauth
+ * CS 1200 HW 1: Dice GROUP A
+ * Names: Benjamin Wang, Jack Myrick, and Luke Jaggernauth
  * 16 September 2021
  */
 
@@ -13,7 +13,7 @@
  */
 function roll() {
 	//variable n is either 10 or the value of the textbox.
-	var n = document.getElementById("numRolls").value | 10
+	var n = document.getElementById("numRolls").value || 10
 
 	//array of tabulated dice sums
 	var category = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -135,13 +135,21 @@ function graph(category, add) {
 	if(add) {
 		statsText += "Raw Difference Numbers: "
 		for(i = 0; i < category.length; i++) {
-			statsText += category[i] + ", "
+			statsText += category[i]
+			if(i + 1 == category.length) {
+				break;
+			}
+			statsText += ","
 		}
 	}
 	else {
 		statsText += "Raw Summation Numbers: "
 		for(i = 2; i < category.length; i++) {
-			statsText += category[i] + ", "
+			statsText += category[i]
+			if(i + 1 == category.length) {
+				break;
+			}
+			statsText += ","
 		}
 	}
 	stats.textContent = statsText
@@ -236,7 +244,7 @@ function populationStats(adding) {
 			}
 		})
 	})
-	console.log(totalCount)
+	//console.log(totalCount)
 	var mean = 0.0
 	for(i = 0; i <= 12; i++) {
 		mean += i * counts[i] / totalCount
@@ -244,7 +252,7 @@ function populationStats(adding) {
 	var variance = -mean * mean
 	for(i = 0; i <= 12; i++) {
 		variance += i * i * counts[i] / totalCount
-		console.log(variance)
+		//console.log(variance)
 	}
 
 	mean = Math.round(mean * decimal) / decimal
