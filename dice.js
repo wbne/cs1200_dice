@@ -226,8 +226,8 @@ function populationStats(adding) {
 	var decimal = 1000
 	var table = document.getElementById(adding ? "adding" : "subtracting")
 
-	var counts = Array(13).fill(0)
-	var totalCount = 0
+	var counts = Array(13).fill(0.0)
+	var totalCount = 0.0
 	table.childNodes.forEach(tr => {
 		tr.childNodes.forEach(td => {
 			if (td.nodeName === 'TD') {
@@ -244,6 +244,7 @@ function populationStats(adding) {
 	var variance = -mean * mean
 	for(i = 0; i <= 12; i++) {
 		variance += i * i * counts[i] / totalCount
+		console.log(variance)
 	}
 
 	mean = Math.round(mean * decimal) / decimal
