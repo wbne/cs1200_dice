@@ -11,25 +11,33 @@
   </style>
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>CS1200 Dice HW</title>
     <script src="https://d3js.org/d3.v4.js"></script>
     <script src="https://d3js.org/d3-selection-multi.v1.js"></script>
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-	  <p>Select the number of dice rolls N</p>
-	  <input id="numRolls" placeholder="eg. 100"></input>
-	  <button id="numButton">Submit</button>
-	  <div id="graphArea"></div>
-    <p id="mean"></p>
-	  <p id="variance"></p>
-    <div id="population" style="display:none">
-      <h3>Summation Table</h3>
-      <table id="adding"></table>
-      <p id="addingPopulation"></p>
-      <h3>Difference Table</h3>
-      <table id="subtracting"></table>
-      <p id="subtractingPopulation"></p>
+    <div id="main">
+      <h1>CS 1200 Dice</h1>
+      <p>Select the number of dice rolls N</p>
+      <input id="numRolls" placeholder="eg. 100"></input>
+      <button id="numButton">Roll!</button>
+      <div id="graphArea"></div>
+      <p id="rollStats"></p>
+      <p id="diffStats"></p>
+      <br>
+      <p id="mean"></p>
+      <p id="variance"></p>
+      <br>
+      <div id="population" style="display:none">
+        <h3>Summation Table</h3>
+        <table id="adding"></table>
+        <p id="addingPopulation"></p>
+        <br>
+        <h3>Difference Table</h3>
+        <table id="subtracting"></table>
+        <p id="subtractingPopulation"></p>
+      </div>
     </div>
   </body>
   <script type="text/javascript" src="dice.js"></script>
