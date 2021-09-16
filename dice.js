@@ -226,22 +226,25 @@ function populationStats(adding) {
 	var decimal = 1000
 	var table = document.getElementById(adding ? "adding" : "subtracting")
 
-	var counts = Array(13).fill(0)
-	var totalCount = 0
+	var counts = Array(13).fill(0.0)
+	var totalCount = 0.0
 	table.childNodes.forEach(tr => {
 		tr.childNodes.forEach(td => {
-			counts[td.innerHTML]++
-			totalCount++
+			if (td.nodeName === 'TD') {
+				counts[td.innerHTML]++
+				totalCount++
+			}
 		})
 	})
-	
-	var mean = 0
+	console.log(totalCount)
+	var mean = 0.0
 	for(i = 0; i <= 12; i++) {
 		mean += i * counts[i] / totalCount
 	}
 	var variance = -mean * mean
 	for(i = 0; i <= 12; i++) {
 		variance += i * i * counts[i] / totalCount
+		console.log(variance)
 	}
 
 	mean = Math.round(mean * decimal) / decimal
