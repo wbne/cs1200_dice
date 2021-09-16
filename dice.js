@@ -1,22 +1,30 @@
 /*
+ * CS 1200 HW 1: GROUP A
+ * Names: Benjamin Wang, Jack Myrick, and Luck Jaggernauth
+ * 16 September 2021
+ */
+
+
+/* 
+ * Question 1: Simulate rolling N dice
  * This initializes the entire program and instantiates the histogram.
  * The two histograms are the summation and difference of two rolled dice.
  * In this the function calls a graph and statistical tests to be run.
  */
 function roll() {
 	//variable n is either 10 or the value of the textbox.
-	var n = 10 | document.getElementById("numRolls").value
+	var n = document.getElementById("numRolls").value | 10
 
 	//array of tabulated dice sums
-	var category = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+	var category = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 	//array of tabulated dice differences
 	var diff = [0, 0, 0, 0, 0, 0]
 
 	//This rolls the dice N many times
 	for(i = 0; i < n; i++) {
-		var q = Math.round(5 * Math.random())
-		var w = Math.round(5 * Math.random())
+		var q = 1 + Math.floor(6 * Math.random())
+		var w = 1 + Math.floor(6 * Math.random())
 		var diffed = Math.abs(q-w)
 
 		//the values correspond to the index and is noted
@@ -43,12 +51,14 @@ function roll() {
 
 /*
  * Creates a bar graph using d3.js library
+ * Also showcases raw numbers from the dice rolling
  * @param category: the array of integer values
  * @param add: whether the graph should be added or overwrite
  */
 function graph(category, add) {
 	tempArray = []
-	for(i = 0; i < category.length; i++) {
+	var i = (add) ? 0 : 2
+	for(; i < category.length; i++) {
 		tempArray.push([i, category[i]])
 	}
 	width = 400
@@ -58,17 +68,11 @@ function graph(category, add) {
 	if(add) {
 		d3.select("#graphArea")
 			.append('defs')
-			.append('style')
-			.attr('type', 'text/css')
-			.text("@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300');")
 		xAxis = "Difference Value"
 	}
 	else {
 		d3.select("#graphArea").html("")
 			.append('defs')
-			.append('style')
-			.attr('type', 'text/css')
-			.text("@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300');")
 		xAxis = "Added Value"
 	}
 
@@ -77,7 +81,7 @@ function graph(category, add) {
 		.classed("graph", true)
 		.attr("width", width + 100)
 		.attr("height", height + 150)
-		.style("font-family", '"Open Sans", sans-serif')
+		.style("font-family", '"Helvetica", sans-serif')
 		.append("g")
 		.attr("transform","translate(" + 50 + "," + 50 + ")");
 	
@@ -90,13 +94,13 @@ function graph(category, add) {
 
 	var x = d3.scaleBand()
 		.range([ 0, width ])
-		.domain(dat.map(function(d) { return d.index; }))
+		.domain(dat.map(function(d) { return (d.index); }))
 		.padding(0.2);
 	svg.append("g")
 		.attr("transform", "translate(0," + height + ")")
 		.call(d3.axisBottom(x))
 		.selectAll("text")
-		.style("font-family", '"Open Sans", sans-serif')
+		.style("font-family", '"Helvetica", sans-serif')
 		.style("text-anchor", "end");
 	svg.append("text")
 		.attr("text-anchor", "end")
@@ -123,10 +127,28 @@ function graph(category, add) {
 		.attr("y", function(d) { return y(d.value); })
 		.attr("width", x.bandwidth())
 		.attr("height", function(d) { return height - y(d.value); })
-		.attr("fill", "#77dd77")
+		.attr("fill", "#3377dd")
+
+	//Raw statistics for accuracy
+	var stats = (add) ? document.getElementById("diffStats") : document.getElementById("rollStats")
+	var statsText = ""
+	if(add) {
+		statsText += "Raw Difference Numbers: "
+		for(i = 0; i < category.length; i++) {
+			statsText += category[i] + ", "
+		}
+	}
+	else {
+		statsText += "Raw Summation Numbers: "
+		for(i = 2; i < category.length; i++) {
+			statsText += category[i] + ", "
+		}
+	}
+	stats.textContent = statsText
 }
 
 /*
+ * Question 2 and 3: Run statistical tests
  * Calculates the variance and the mean.
  * @param array: The array of integer values
  * @param number: The sample size
