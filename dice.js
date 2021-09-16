@@ -208,12 +208,14 @@ function populationStats(adding) {
 	var totalCount = 0
 	table.childNodes.forEach(tr => {
 		tr.childNodes.forEach(td => {
-			counts[td.innerHTML]++
-			totalCount++
+			if (td.nodeName === 'TD') {
+				counts[td.innerHTML]++
+				totalCount++
+			}
 		})
 	})
-	
-	var mean = 0
+	console.log(totalCount)
+	var mean = 0.0
 	for(i = 0; i <= 12; i++) {
 		mean += i * counts[i] / totalCount
 	}
